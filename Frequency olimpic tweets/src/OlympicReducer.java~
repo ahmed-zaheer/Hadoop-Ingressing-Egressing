@@ -1,0 +1,67 @@
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.IntWritable;
+
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Reducer;
+public class OlympicReducer extends Reducer<Text, IntWritable, Text, IntWritable> 
+{	
+	
+	IntWritable result = new IntWritable();
+	
+
+	public void reduce(Text key, Iterable<IntWritable> values, Context context)throws IOException, InterruptedException 
+	{
+		int count = 0;
+		for( IntWritable val : values)
+		{
+			count++;
+		}
+
+		result.set(count);
+		context.write(key, result);
+		
+	}
+
+
+/*
+	public static int diff(Date date1, Date date2) {
+		Calendar c1 = Calendar.getInstance();
+		Calendar c2 = Calendar.getInstance();
+
+		c1.setTime(date1);
+		c2.setTime(date2);
+		int diffDay = 0;
+
+		if (c1.before(c2)) {
+			diffDay = countDiffDay(c1, c2);
+		} else {
+			diffDay = countDiffDay(c2, c1);
+		}
+
+		return diffDay;
+	}
+
+
+	public static int countDiffDay(Calendar c1, Calendar c2) {
+		int returnInt = 0;
+		while (!c1.after(c2)) {
+			c1.add(Calendar.DAY_OF_MONTH, 1);
+			returnInt++;
+		}
+
+		if (returnInt > 0) {
+			returnInt = returnInt - 1;
+		}
+
+		return (returnInt);
+	}
+*/
+
+}
+
+
